@@ -1,0 +1,19 @@
+<cdk-virtual-scroll-viewport itemSize="100" class="user-viewport">
+  <div
+    *cdkVirtualFor="
+      let user of (users | async);
+      let i = index;
+      trackBy: trackByIdx;
+      let odd = odd
+    "
+    [class.bg-odd]="odd"
+    class='list-user'
+  >
+    <div class="user-item-detail">ID: {{ user.id }}</div>
+    <div class="user-item-detail">Name: {{ user.name }}</div>
+    <div class="user-item-detail">Gender: {{ user.gender }}</div>
+    <div class="user-item-detail">Address: {{ user.address }}</div>
+    <div class="user-item-detail">Weight: {{ user.weight }}</div>
+  </div>
+</cdk-virtual-scroll-viewport>
+
