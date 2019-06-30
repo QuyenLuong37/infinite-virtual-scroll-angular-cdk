@@ -18,6 +18,7 @@ export class UserComponent implements OnInit {
   constructor(private fb: AngularFirestore) {}
 
   ngOnInit(): void {
+    //TODO: dữ liệu mà dạng observable thì cần thêm $ ở cuối để dễ phân biệt với data thường
     const dataScroll = this.lastDocView$.pipe(
       mergeMap(val => this.getSubData(val)),
       scan((acc, cur) => {
