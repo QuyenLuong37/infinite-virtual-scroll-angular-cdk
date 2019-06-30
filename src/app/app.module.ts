@@ -8,11 +8,14 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { UserComponent } from './user/user.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareMaterialModule } from './share/material.module';
+import { ReactiveDateComponent } from './reactive-date/reactive-date.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent
+    UserComponent,
+    ReactiveDateComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -20,7 +23,9 @@ import { ShareMaterialModule } from './share/material.module';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    ShareMaterialModule
+    ShareMaterialModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   entryComponents: [UserComponent],

@@ -1,0 +1,26 @@
+<!-- <label for="date" [formGroup]='formReactDate'>
+  <input
+    type="text"
+    id='date'
+    (blur)="checkBlur($event)"
+    (input)="checkInput($event)"
+    (keyup)="keyup($event)"
+    [formControlName]="'date'"
+    [ngStyle]="{'width.px': inputWidth}"
+  />
+</label> -->
+<form [formGroup]='formReactDate'>
+  <label for="date">Date</label>
+  <input
+    type="text"
+    id='date'
+    (blur)="checkBlur($event)"
+    (input)="checkInput($event)"
+    (keyup)="keyup($event)"
+    [formControlName]="'date'"
+    [ngStyle]="{'width.px': inputWidth}"
+    placeholder="MM/ DD/ YYYY"
+  />
+  <div> MM/ DD/ YYYY</div>
+  <small>Enter date as Month / Day / Year</small>
+</form>
