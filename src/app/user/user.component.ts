@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Observable, BehaviorSubject } from "rxjs";
-import { map, tap, mergeMap, scan, throttleTime, reduce } from "rxjs/operators";
+import { map, tap, mergeMap, scan, throttleTime } from "rxjs/operators";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { InfinityAppointmentScrollDataService } from "../service/infinity-appointment-scroll-data.service";
+
 @Component({
   selector: "app-user",
   templateUrl: "./user.component.html",
@@ -15,7 +17,10 @@ export class UserComponent implements OnInit {
 
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
 
-  constructor(private fb: AngularFirestore) {}
+  constructor(
+    private fb: AngularFirestore,
+    private infinityService: InfinityAppointmentScrollDataService
+  ) {}
 
   ngOnInit(): void {
     //TODO: dữ liệu mà dạng observable thì cần thêm $ ở cuối để dễ phân biệt với data thường
@@ -37,30 +42,22 @@ export class UserComponent implements OnInit {
   }
 
   getSubData(lastDocView) {
-    return this.fb
-      .collection("users", ref =>
-        ref
-          .orderBy("id", "asc")
-          .startAfter(lastDocView)
-          .limit(20)
-      )
-      .snapshotChanges()
-      .pipe(
-        tap(doc => {
-          console.log(doc);
-          if (doc.length === 0) {
-            console.log('check');
-            this.stop.next(true);
-          }
-        }),
-        map(arr => {
-          return arr.reduce((acc, cur) => {
-            const id = cur.payload.doc.id;
-            const data = cur.payload.doc.data();
-            return { ...acc, [id]: data };
-          }, {});
-        })
-      );
+    return this.infinityService.getDataFromFirebase(lastDocView).pipe(
+      tap(doc => {
+        console.log(doc);
+        if (doc.length === 0) {
+          console.log("check");
+          this.stop.next(true);
+        }
+      }),
+      map(arr => {
+        return arr.reduce((acc, cur) => {
+          const id = cur.payload.doc.id;
+          const data = cur.payload.doc.data();
+          return { ...acc, [id]: data };
+        }, {});
+      })
+    );
   }
 
   nextData(e, lastDocView) {

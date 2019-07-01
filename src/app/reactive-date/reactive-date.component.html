@@ -9,15 +9,14 @@
     [ngStyle]="{'width.px': inputWidth}"
   />
 </label> -->
-<form [formGroup]='formReactDate'>
+<form >
   <label for="date">Date</label>
   <input
     type="text"
     id='date'
-    (blur)="checkBlur($event)"
-    (input)="checkInput($event)"
-    (keyup)="keyup($event)"
-    [formControlName]="'date'"
+    (blur)="showDateValid($event)"
+    (input)="setFomatDate($event)"
+    (keyup)="setWidthInput($event)"
     [ngStyle]="{'width.px': inputWidth}"
     placeholder="MM/ DD/ YYYY"
   />
